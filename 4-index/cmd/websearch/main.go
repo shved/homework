@@ -36,8 +36,12 @@ func main() {
 
 		// TODO искать по фразам, не только по одному слову
 		if entries, ok := indx.GIN[searchTerm]; ok {
-			for _, url := range entries {
-				fmt.Printf("Entry found on %s page\n", url)
+			for _, id := range entries {
+				docPtr, err := indx.FindDoc(id)
+				if err != nil {
+					continue
+				}
+				fmt.Printf("Entry found on %s page\n", docPtr.URL)
 			}
 		}
 		fmt.Println()
